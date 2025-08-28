@@ -5,6 +5,9 @@ import NavBar from "../components/Navbar";
 import Register from "../pages/Register";
 import AvailabilityManager from "../pages/AvailabilityManager";
 import BookingManagement from "../pages/BookingManagement";
+import BookingForm from "../pages/BookingForm";
+import TutorList from "../pages/TutorList";
+import TutorDetail from "../pages/TutorDetail";
 
 export default function App() {
   return (
@@ -16,7 +19,7 @@ export default function App() {
         <Route path="/availability"element = { <PrivateRoute>
           <AvailabilityManager />
           </PrivateRoute> }/>
-          <Route path="/tutors" element={<TutorsList />} />
+          <Route path="/tutors" element={<TutorList />} />
           <Route path="/tutors/:id" element={<TutorDetail />} />
           <Route path="/book/:id" element={
           <PrivateRoute>
@@ -40,7 +43,3 @@ function PrivateRoute({ children }) {
   const { token } = useContext(AuthContext);
   return token ? children : <Navigate to="/login" />;
 }
-
-
-
-

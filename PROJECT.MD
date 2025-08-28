@@ -102,3 +102,7 @@ PATCH /api/bookings/:id/status [tutor confirms/cancels]
 
 // Embeddable Widget (Future)
 // <TutorBookingWidget tutorSlug="zanele-maths" />
+
+
+/Site for Vercel:
+https://111-g23n82r1k-viossixths-projects.vercel.app/
