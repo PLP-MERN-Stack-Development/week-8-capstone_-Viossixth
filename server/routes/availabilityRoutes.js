@@ -58,7 +58,7 @@ router.delete("/:id", authMiddleware, async (req, res) => {
 
 
 // Availability for logged in tutor
-router.get("/me", auth, async (req, res) => {
+router.get("/me", authMiddleware, async (req, res) => {
   try {
     const availability = await Availability.find({ tutor: req.user.id });
     res.json(availability);

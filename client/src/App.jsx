@@ -3,8 +3,8 @@ import Login from "../pages/Login";
 import Dashboard from "../pages/Dashboard";
 import NavBar from "../components/Navbar";
 import Register from "../pages/Register";
-import AvailabilityManager from "./pages/AvailabilityManager";
-import BookingManagement from "./pages/BookingManagement";
+import AvailabilityManager from "../pages/AvailabilityManager";
+import BookingManagement from "../pages/BookingManagement";
 
 export default function App() {
   return (
