@@ -1,42 +1,23 @@
+import axios from "axios";
+
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
-export async function post(endpoint, data, token) {
-  const res = await fetch(`${API_URL}/${endpoint}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      ...(token && { Authorization: `Bearer ${token}` }),
-    },
-    body: JSON.stringify(data),
-  });
-  return res.json();
-}
+const api = axios.create({
+  baseURL: API_URL,
+  withCredentials :true,
+  headers: { "Content-Type": "application/json" },
+});
 
-export async function get(endpoint, token) {
-  const res = await fetch(`${API_URL}/${endpoint}`, {
-    headers: {
-      ...(token && { Authorization: `Bearer ${token}` }),
-    },
-  });
-  return res.json();
-}
 
-export async function del(url) {
-  try {
-    const response = await axios.delete(url);
-    return response.data;  // return server response
-  } catch (error) {
-    console.error("Delete request failed:", error);
-    throw error;           // let the caller handle the error
-  }
-}
+// Wraps to keep consistency
+export const get = (endpoint, token) =>
+  api.get(endpoint, token && { headers: { Authorization: `Bearer ${token}` } });
 
-export async function patch(url, data) {
-  try {
-    const response = await axios.patch(url, data);
-    return response.data; // return server response
-  } catch (error) {
-    console.error("Patch request failed:", error);
-    throw error;          // let the caller handle the error
-  }
-}
+export const post = (endpoint, data, token) =>
+  api.post(endpoint, data, token && { headers: { Authorization: `Bearer ${token}` } });
+
+export const patch = (endpoint, data, token) =>
+  api.patch(endpoint, data, token && { headers: { Authorization: `Bearer ${token}` } });
+
+export const del = (endpoint, token) =>
+  api.delete(endpoint, token && { headers: { Authorization: `Bearer ${token}` } });

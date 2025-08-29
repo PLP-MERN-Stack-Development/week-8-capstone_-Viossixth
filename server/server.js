@@ -13,10 +13,12 @@ dotenv.config();
 connectDB();
 
 const app = express();
+const tutorsRouter = import('./routes/tutorRoutes.js');
 
 //middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+
 
 
 //routes
@@ -27,13 +29,12 @@ app.use("/api/bookings", bookingRoutes);
 app.use("/api/tutors", tutorRoutes);
 
 
-
 const PORT = process.env.PORT || 5000;
 app.listen(PORT,()=> console.log(`Server running on port ${PORT}`));
 
 const allowedOrigins = [
   "http://localhost:5173", // Dev frontend
-  "https://willow.app",    // Prod frontend
+  "http://willow.app",    // Prod frontend
 ];
 
 app.use(cors({

@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { get, patch, del } from "../api/api";
 import { AuthContext } from "../context/AuthContext";
 
+
 export default function BookingManagement() {
   const { token, user } = useContext(AuthContext);
   const [bookings, setBookings] = useState([]);

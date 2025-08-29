@@ -3,6 +3,7 @@ import { AuthContext } from "../context/AuthContext";
 import { post } from "../api/api";
 import { useNavigate } from "react-router-dom";
 
+
 export default function Register() {
   const { setToken } = useContext(AuthContext);
   const navigate = useNavigate();
