@@ -1,26 +1,17 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
+import StudentDashboard from "./StudentDashboard";
+import TutorDashboard from "./TutorDashboard.jsx";
 
-export default function NavBar() {
-  const { token, setToken } = useContext(AuthContext);
-  const navigate = useNavigate();
+export default function Dashboard() {
+  const { user } = useContext(AuthContext);
 
-  const logout = () => {
-    setToken(null);
-    navigate("/login");
-  };
+  if (!user) return <p>Loading...</p>;
 
   return (
-    <nav>
-      {token ? (
-        <>
-          <Link to="/dashboard">Dashboard</Link>
-          <button onClick={logout}>Logout</button>
-        </>
-      ) : (
-        <Link to="/login">Login</Link>
-      )}
-    </nav>
+    <div>
+      <h1>Welcome, {user.name}!</h1>
+      {user.role === "student" ? <StudentDashboard /> : <TutorDashboard />}
+    </div>
   );
 }

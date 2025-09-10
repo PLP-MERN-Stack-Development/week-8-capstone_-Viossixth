@@ -11,14 +11,18 @@ export default function Login() {
  const handleSubmit = async (e) => {
   e.preventDefault();
   const res = await post("auth/login", { email, password });
+
   if (res.token) {
     setToken(res.token);
     setUser(res.user);
-    navigate("/dashboard");
+
+    // Redirect based on role
+    if (res.user.role === "student") navigate("/dashboard");
+    else if (res.user.role === "tutor") navigate("/dashboard");
   } else {
     setError(res.message || "Login failed");
-    }
-  };
+  }
+};
 
   return (
     <form onSubmit={handleSubmit}>

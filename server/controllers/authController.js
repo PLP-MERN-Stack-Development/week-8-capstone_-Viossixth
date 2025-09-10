@@ -2,28 +2,35 @@ import User from "../models/users.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-export const register = async (req, res) => {
-  const { name, email, password, role } = req.body;
 
+export const register = async (req, res) => {
+  console.log("Register route hit");
+  console.log("Request body type:", typeof req.body);
+  console.log("Request body content:", req.body);
+
+  const { name, email, password, role } = req.body;
+  
   try {
+    if (!name || !email || !password || !role) {
+      console.log("Missing fields in request body");
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
     let user = await User.findOne({ email });
     if (user) return res.status(400).json({ message: "user already exists" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    user = new User({ name, email, password: hashedPassword, role });
+    const savedUser = await user.save();
 
-    user = new User({
-      name,
-      email,
-      password: hashedPassword,
-      role
-    });
-
-    await user.save();
-    res.status(201).json({ message: "User registered successfully" });
+    console.log("Saved user:", savedUser);
+    res.status(201).json({ message: "User registered successfully", user: savedUser });
   } catch (err) {
+    console.error("Register error:", err);
     res.status(500).json({ message: err.message });
   }
 };
+
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
